@@ -5,6 +5,10 @@ public class Country implements Comparable<Country> {
     private final String name;
     private final int population;
 
+    public static void main(String[] args) {
+		
+	}
+    
     public Country(String name, int population) {
         this.name = name;
         this.population = population;
