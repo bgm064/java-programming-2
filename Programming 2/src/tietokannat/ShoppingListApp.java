@@ -83,18 +83,32 @@ public class ShoppingListApp {
 			}
 		}
 
-		System.out.println(space + underscore.repeat(row + 3) + "\n|ID|Title" + space.repeat(row - 5) + "|");
+		if (row == 0) {
+			System.out.println("\nList is empty\n");
 
-		for (ShoppingListItem item : items) {
-			if (item.getId() < 10) {
+		} else if (row < 9) {
+			System.out.println(space + underscore.repeat(8) + "\n|ID|Title|");
+
+			for (ShoppingListItem item : items) {
 				System.out.println("|" + item.getId() + space + "|" + item.getTitle()
-						+ space.repeat(row - item.getTitle().length()) + "|");
-			} else {
-				System.out.println("|" + item.getId() + "|" + item.getTitle()
-						+ space.repeat(row - item.getTitle().length()) + "|");
+						+ space.repeat(5 - item.getTitle().length()) + "|");
 			}
+			System.out.println(space + upperscore.repeat(8));
+		} else {
+
+			System.out.println(space + underscore.repeat(row + 3) + "\n|ID|Title" + space.repeat(row - 5) + "|");
+
+			for (ShoppingListItem item : items) {
+				if (item.getId() < 10) {
+					System.out.println("|" + item.getId() + space + "|" + item.getTitle()
+							+ space.repeat(row - item.getTitle().length()) + "|");
+				} else {
+					System.out.println("|" + item.getId() + "|" + item.getTitle()
+							+ space.repeat(row - item.getTitle().length()) + "|");
+				}
+			}
+			System.out.println(space + upperscore.repeat(row + 3));
 		}
-		System.out.println(space + upperscore.repeat(row + 3));
 	}
 
 	private static void addItem(String title) {
