@@ -13,6 +13,10 @@ import java.util.List;
 public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 	private static final String JDBC_URL = System.getenv("JDBC_DATABASE_URL");
 
+	private Connection connect() throws SQLException {
+		return DriverManager.getConnection(JDBC_URL);
+	}
+
 	@Override
 	public List<ShoppingListItem> getAllItems() {
 		Connection connection = null;
@@ -23,7 +27,7 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 
 		try {
 			// muodostetaan yhteys tietokantaan
-			connection = DriverManager.getConnection(JDBC_URL);
+			connection = connect();
 
 			// muodostetaan ja suoritetaan kysely
 			statement = connection.prepareStatement("SELECT * FROM ShoppingListItem");
@@ -74,7 +78,7 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 				}
 			}
 
-			connection = DriverManager.getConnection(JDBC_URL);
+			connection = connect();
 			statement = connection.prepareStatement("INSERT INTO ShoppingListItem (title) VALUES (?)",
 					statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, newItem.getTitle());
@@ -109,8 +113,7 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 		List<ShoppingListItem> items = getAllItems();
 
 		try {
-			connection = DriverManager.getConnection(JDBC_URL);
-
+			connection = connect();
 			statement = connection.prepareStatement("DELETE FROM ShoppingListItem WHERE title = ?");
 
 			for (ShoppingListItem listItem : items) {

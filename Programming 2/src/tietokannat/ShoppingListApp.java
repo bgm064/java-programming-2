@@ -81,7 +81,7 @@ public class ShoppingListApp {
 		// tulostetaan tietokanta laatikkorakenteeseen pisimmän rivin mukaan
 		if (row == 0) {
 			System.out.println("\nList is empty\n");
-		} else if (row < 9) {
+		} else if (row <= 3) {
 			printInFrames(5, 8, 0);
 		} else {
 			printInFrames(row, row + 3, row - 5);
