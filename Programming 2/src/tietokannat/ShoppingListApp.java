@@ -68,46 +68,23 @@ public class ShoppingListApp {
 	}
 
 	private static void listAllItems() {
-		System.out.println("Shopping list contents:");
-
 		List<ShoppingListItem> items = dao.getAllItems();
-		String underscore = "_";
-		String upperscore = "‾";
-		String space = " ";
 		int row = 0;
 
-		// lasketaan pisimmän rivin pituus
+		// lasketaan tietokannan pisimmän rivin pituus
 		for (ShoppingListItem item : items) {
 			if (item.getTitle().length() > row) {
 				row = item.getTitle().length();
 			}
 		}
 
+		// tulostetaan tietokanta laatikkorakenteeseen pisimmän rivin mukaan
 		if (row == 0) {
 			System.out.println("\nList is empty\n");
-
 		} else if (row < 9) {
-			System.out.println(space + underscore.repeat(8) + "\n|ID|Title|");
-
-			for (ShoppingListItem item : items) {
-				System.out.println("|" + item.getId() + space + "|" + item.getTitle()
-						+ space.repeat(5 - item.getTitle().length()) + "|");
-			}
-			System.out.println(space + upperscore.repeat(8));
+			printFrame(5, 8, 0, 8);
 		} else {
-
-			System.out.println(space + underscore.repeat(row + 3) + "\n|ID|Title" + space.repeat(row - 5) + "|");
-
-			for (ShoppingListItem item : items) {
-				if (item.getId() < 10) {
-					System.out.println("|" + item.getId() + space + "|" + item.getTitle()
-							+ space.repeat(row - item.getTitle().length()) + "|");
-				} else {
-					System.out.println("|" + item.getId() + "|" + item.getTitle()
-							+ space.repeat(row - item.getTitle().length()) + "|");
-				}
-			}
-			System.out.println(space + upperscore.repeat(row + 3));
+			printFrame(row, row + 3, row - 5, row + 3);
 		}
 	}
 
@@ -139,6 +116,29 @@ public class ShoppingListApp {
 		} else {
 			System.out.println("ID not found");
 		}
+	}
+
+	private static void printFrame(int i, int j, int k, int l) {
+		// luodaan tietokannalle laatikkorakenne
+		List<ShoppingListItem> items = dao.getAllItems();
+		String underscore = "_";
+		String upperscore = "‾";
+		String space = " ";
+
+		System.out.println(
+				"Shopping list contents:\n" + space + underscore.repeat(j) + "\n|ID|Title" + space.repeat(k) + "|");
+
+		// tulostetaan tietokanta ja lasketaan laatikoiden reunojen etäisyys
+		for (ShoppingListItem item : items) {
+			if (item.getId() < 10) {
+				System.out.println("|" + item.getId() + space + "|" + item.getTitle()
+						+ space.repeat(i - item.getTitle().length()) + "|");
+			} else {
+				System.out.println(
+						"|" + item.getId() + "|" + item.getTitle() + space.repeat(i - item.getTitle().length()) + "|");
+			}
+		}
+		System.out.println(space + upperscore.repeat(l));
 	}
 
 }

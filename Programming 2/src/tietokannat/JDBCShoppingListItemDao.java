@@ -11,7 +11,7 @@ import java.util.List;
 // JDBCShoppingListItemDao toteuttaa rajapinnan ja sisältää konkreettisen SQL-logiikan
 
 public class JDBCShoppingListItemDao implements ShoppingListItemDao {
-	private static final String URL = "jdbc:sqlite:D:\\sqlite\\shoppingList.sqlite";
+	private static final String JDBC_URL = System.getenv("JDBC_DATABASE_URL");
 
 	@Override
 	public List<ShoppingListItem> getAllItems() {
@@ -23,7 +23,7 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 
 		try {
 			// muodostetaan yhteys tietokantaan
-			connection = DriverManager.getConnection(URL);
+			connection = DriverManager.getConnection(JDBC_URL);
 
 			// muodostetaan ja suoritetaan kysely
 			statement = connection.prepareStatement("SELECT * FROM ShoppingListItem");
@@ -74,7 +74,7 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 				}
 			}
 
-			connection = DriverManager.getConnection(URL);
+			connection = DriverManager.getConnection(JDBC_URL);
 			statement = connection.prepareStatement("INSERT INTO ShoppingListItem (title) VALUES (?)",
 					statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, newItem.getTitle());
@@ -109,7 +109,7 @@ public class JDBCShoppingListItemDao implements ShoppingListItemDao {
 		List<ShoppingListItem> items = getAllItems();
 
 		try {
-			connection = DriverManager.getConnection(URL);
+			connection = DriverManager.getConnection(JDBC_URL);
 
 			statement = connection.prepareStatement("DELETE FROM ShoppingListItem WHERE title = ?");
 
