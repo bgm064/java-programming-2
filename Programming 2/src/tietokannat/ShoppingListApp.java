@@ -82,9 +82,9 @@ public class ShoppingListApp {
 		if (row == 0) {
 			System.out.println("\nList is empty\n");
 		} else if (row < 9) {
-			printFrame(5, 8, 0, 8);
+			printInFrames(5, 8, 0);
 		} else {
-			printFrame(row, row + 3, row - 5, row + 3);
+			printInFrames(row, row + 3, row - 5);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class ShoppingListApp {
 		}
 	}
 
-	private static void printFrame(int i, int j, int k, int l) {
+	private static void printInFrames(int i, int j, int k) {
 		// luodaan tietokannalle laatikkorakenne
 		List<ShoppingListItem> items = dao.getAllItems();
 		String underscore = "_";
@@ -138,7 +138,7 @@ public class ShoppingListApp {
 						"|" + item.getId() + "|" + item.getTitle() + space.repeat(i - item.getTitle().length()) + "|");
 			}
 		}
-		System.out.println(space + upperscore.repeat(l));
+		System.out.println(space + upperscore.repeat(j));
 	}
 
 }
